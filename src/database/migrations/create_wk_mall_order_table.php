@@ -9,9 +9,9 @@ class CreateWkMallOrderTable extends Migration
     public function up()
     {
         Schema::create(config('wk-core.table.mall-order.orders'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->morphs('host');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->uuid('id');
+            $table->uuidMorphs('host');
+            $table->uuid('user_id')->nullable();
             $table->string('identifier')->unique();
             $table->text('note')->nullable();
             $table->unsignedDecimal('grandtotal', config('wk-mall-order.unsigned_decimal.precision'), config('wk-mall-order.unsigned_decimal.scale'))->nullable();
@@ -34,14 +34,15 @@ class CreateWkMallOrderTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
+            $table->primary('id');
             $table->index('grandtotal');
             $table->index('security_code');
         });
 
         Schema::create(config('wk-core.table.mall-order.reviews'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->uuid('id');
+            $table->uuid('order_id')->nullable();
+            $table->uuid('user_id')->nullable();
             $table->char('state', 2);
             $table->text('state_note')->nullable();
             $table->boolean('is_current')->default(1);
@@ -58,6 +59,7 @@ class CreateWkMallOrderTable extends Migration
                   ->onDelete('set null')
                   ->onUpdate('cascade');
 
+            $table->primary('id');
             $table->index('state');
         });
     }

@@ -16,7 +16,7 @@ class ReviewFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if (empty($data['order_id']) && isset($request->id)) {
-            $data['order_id'] = (int) $request->id;
+            $data['order_id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -46,8 +46,8 @@ class ReviewFormRequest extends FormRequest
         $options = config('wk-core.class.mall-order.orderState')::findOptions($state, true);
 
         $rules = [
-            'order_id'   => ['required','integer','min:1','exists:'.config('wk-core.table.mall-order.orders').',id'],
-            'user_id'    => ['nullable','integer','min:1','exists:'.config('wk-core.table.user').',id'],
+            'order_id'   => ['required','string','exists:'.config('wk-core.table.mall-order.orders').',id'],
+            'user_id'    => ['nullable','string','exists:'.config('wk-core.table.user').',id'],
             'state'      => ['required', Rule::in($options)],
             'state_note' => '',
         ];

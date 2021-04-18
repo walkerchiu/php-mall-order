@@ -6,7 +6,7 @@ trait UserTrait
 {
     /**
      * @param String $host_type
-     * @param Int    $host_id
+     * @param String $host_id
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders($host_type = null, $host_id = null) {

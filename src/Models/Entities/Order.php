@@ -2,14 +2,12 @@
 
 namespace WalkerChiu\MallOrder\Models\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use WalkerChiu\Core\Models\Entities\DateTrait;
 use WalkerChiu\MallOrder\Models\Constants\OrderState;
+use WalkerChiu\MallOrder\Models\Constants\UuidModel;
 
-class Order extends Model
+class Order extends UuidModel
 {
-    use DateTrait;
     use SoftDeletes;
 
     protected $fillable = [

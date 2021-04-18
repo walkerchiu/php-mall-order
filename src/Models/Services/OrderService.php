@@ -28,10 +28,10 @@ class OrderService
     */
 
     /**
-     * @param Int $order_id
+     * @param String $order_id
      * @return Order
      */
-    public function find(Int $order_id)
+    public function find(String $order_id)
     {
         $entity = $this->repository->find($order_id);
 
@@ -42,12 +42,12 @@ class OrderService
     }
 
     /**
-     * @param Order|Int $source
+     * @param Order|String $source
      * @return Order
      */
     public function findBySource($source)
     {
-        if (is_integer($source))
+        if (is_string($source))
             $entity = $this->find($source);
         elseif (is_a($source, config('wk-core.class.mall-order.order')))
             $entity = $source;
@@ -103,8 +103,8 @@ class OrderService
 
     /**
      * @param String $host_type
-     * @param Int    $host_id
-     * @param Int    $user_id
+     * @param String $host_id
+     * @param String $user_id
      * @param Any    $note
      * @param String $data
      * @param String $security_code
@@ -115,7 +115,7 @@ class OrderService
      * @param String $suffix
      * @return Order
      */
-    public function order(String $host_type, Int $host_id, $user_id, $note, String $data, String $security_code, String $state, $state_note = null, $length = null, $prefix = null, $suffix = null)
+    public function order(String $host_type, String $host_id, $user_id, $note, String $data, String $security_code, String $state, $state_note = null, $length = null, $prefix = null, $suffix = null)
     {
         DB::beginTransaction();
             try {

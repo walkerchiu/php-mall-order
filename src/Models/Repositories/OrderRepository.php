@@ -27,7 +27,7 @@ class OrderRepository extends Repository
 
     /**
      * @param String  $host_type
-     * @param Int     $host_id
+     * @param String  $host_id
      * @param String  $code
      * @param Array   $data
      * @param Int     $page
@@ -120,11 +120,11 @@ class OrderRepository extends Repository
     }
 
     /**
-     * @param Int    $id
+     * @param String $id
      * @param String $code
      * @return Array
      */
-    public function showById(Int $id, $code)
+    public function showById(String $id, $code)
     {
         $order = $this->find($id);
         if (empty($order)) throw new NotFoundEntityException($id);
@@ -214,15 +214,15 @@ class OrderRepository extends Repository
 
     /**
      * @param String $host_type
-     * @param Int    $host_id
+     * @param String $host_id
      * @param String $identifier
-     * @param Int    $user_id
+     * @param String $user_id
      * @param String $note
      * @param String $data
      * @param String $security_code
      * @return Entity
      */
-    public function order(String $host_type, Int $host_id, String $identifier, $user_id, $note, String $data, String $security_code)
+    public function order(String $host_type, String $host_id, String $identifier, $user_id, $note, String $data, String $security_code)
     {
         $obj = json_decode($data);
 
@@ -247,12 +247,12 @@ class OrderRepository extends Repository
     }
 
     /**
-     * @param Int    $order_id
+     * @param String $order_id
      * @param String $state
      * @param String $state_note
      * @return Entity
      */
-    public function createReview(Int $order_id, $user_id, String $state, $state_note = null)
+    public function createReview(String $order_id, $user_id, String $state, $state_note = null)
     {
         return config('wk-core.class.mall-order.review')::create([
             'order_id'   => $order_id,

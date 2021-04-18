@@ -2,13 +2,11 @@
 
 namespace WalkerChiu\MallOrder\Models\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use WalkerChiu\Core\Models\Entities\DateTrait;
+use WalkerChiu\MallOrder\Models\Constants\UuidModel;
 
-class Review extends Model
+class Review extends UuidModel
 {
-    use DateTrait;
     use SoftDeletes;
 
     protected $fillable = [

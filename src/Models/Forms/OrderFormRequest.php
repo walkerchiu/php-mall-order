@@ -17,7 +17,7 @@ class OrderFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
         if ($request->isMethod('put') && empty($data['identifier']) && isset($request->identifier)) {
@@ -91,9 +91,9 @@ class OrderFormRequest extends FormRequest
     {
         $rules = [
             'host_type'  => 'required|string',
-            'host_id'    => 'required|integer|min:1',
-            'channel_id' => 'required|integer|min:1',
-            'user_id'    => ['required_without_all:contact_area,recipient_area,bill_area,invoice_area','integer','min:1','exists:'.config('wk-core.table.user').',id'],
+            'host_id'    => 'required|string',
+            'channel_id' => 'required|string',
+            'user_id'    => ['required_without_all:contact_area,recipient_area,bill_area,invoice_area','string','exists:'.config('wk-core.table.user').',id'],
 
             'note' => '',
 
@@ -148,7 +148,7 @@ class OrderFormRequest extends FormRequest
 
         $request = Request::instance();
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-order.orders').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.mall-order.orders').',id']]);
         }
         if ($request->isMethod('put') && isset($request->identifier)) {
             $rules = array_merge($rules, ['identifier' => ['required','exists:'.config('wk-core.table.mall-order.orders').',identifier']]);
@@ -166,20 +166,16 @@ class OrderFormRequest extends FormRequest
     {
         return [
             'id.required'              => trans('php-core::validation.required'),
-            'id.integer'               => trans('php-core::validation.integer'),
-            'id.min'                   => trans('php-core::validation.min'),
+            'id.string'                => trans('php-core::validation.string'),
             'id.exists'                => trans('php-core::validation.exists'),
             'host_type.required'       => trans('php-core::validation.required'),
             'host_type.string'         => trans('php-core::validation.string'),
-            'host_id.required'         => trans('php-core::validation.required'),
-            'host_id.integer'          => trans('php-core::validation.integer'),
+            'host_id.string'           => trans('php-core::validation.string'),
             'host_id.min'              => trans('php-core::validation.min'),
             'channel_id.required'      => trans('php-core::validation.required'),
-            'channel_id.integer'       => trans('php-core::validation.integer'),
-            'channel_id.min'           => trans('php-core::validation.min'),
+            'channel_id.string'        => trans('php-core::validation.string'),
             'user_id.required_without' => trans('php-core::validation.required_without'),
-            'user_id.integer'          => trans('php-core::validation.integer'),
-            'user_id.min'              => trans('php-core::validation.min'),
+            'user_id.string'           => trans('php-core::validation.string'),
             'user_id.exists'           => trans('php-core::validation.exists'),
 
             'coupon.string' => trans('php-core::validation.string'),
