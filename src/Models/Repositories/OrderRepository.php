@@ -34,9 +34,10 @@ class OrderRepository extends Repository
      * @param Int     $nums per page
      * @param String  $target
      * @param Boolean $target_is_enabled
-     * @return Array
+     * @param Boolean $toArray
+     * @return Array|Collection
      */
-    public function list($host_type, $host_id, String $code, Array $data, $page = null, $nums = null, $target = null, $target_is_enabled = null)
+    public function list($host_type, $host_id, String $code, Array $data, $page = null, $nums = null, $target = null, $target_is_enabled = null, $toArray = true)
     {
         $this->assertForPagination($page, $nums);
 
@@ -97,26 +98,30 @@ class OrderRepository extends Repository
                             ->when(is_integer($page) && is_integer($nums), function ($query) use ($page, $nums) {
                                 return $query->forPage($page, $nums);
                             });
-        $list = [];
-        foreach ($records as $record) {
-            $data = $record->toArray();
+        if ($toArray) {
+            $list = [];
+            foreach ($records as $record) {
+                $data = $record->toArray();
 
-            $obj = json_decode($record);
-            $user_name = ($record->user_id) ? $record->user->name
-                                            : $obj->addresses->contact->email;
+                $obj = json_decode($record);
+                $user_name = ($record->user_id) ? $record->user->name
+                                                : $obj->addresses->contact->email;
 
-            array_push($list,
-                array_merge($data, [
-                    'user'       => $user_name,
-                    'state'      => $record->reviews->last()->state,
-                    'stateText'  => $record->stateText(),
-                    'stateNote'  => $record->reviews->last()->state_note,
-                    'updated_at' => $record->reviews->last()->created_at
-                ])
-            );
+                array_push($list,
+                    array_merge($data, [
+                        'user'       => $user_name,
+                        'state'      => $record->reviews->last()->state,
+                        'stateText'  => $record->stateText(),
+                        'stateNote'  => $record->reviews->last()->state_note,
+                        'updated_at' => $record->reviews->last()->created_at
+                    ])
+                );
+            }
+
+            return $list;
+        } else {
+            return $records;
         }
-
-        return $list;
     }
 
     /**
