@@ -264,7 +264,7 @@ class OrderFormRequest extends FormRequest
      */
     public function withValidator($validator)
     {
-        if ( !empty(config('wk-core.class.site.site')) ) {
+        if ( !empty(config('wk-core.class.site-mall.site')) ) {
             $validator->after( function ($validator) {
                 $data = $validator->getData();
                 if (
@@ -272,11 +272,11 @@ class OrderFormRequest extends FormRequest
                     && isset($data['host_id'])
                 ) {
                     if (
-                        config('wk-mall-order.onoff.site')
-                        && !empty(config('wk-core.class.site.site'))
-                        && $data['host_type'] == config('wk-core.class.site.site')
+                        config('wk-mall-order.onoff.site-mall')
+                        && !empty(config('wk-core.class.site-mall.site'))
+                        && $data['host_type'] == config('wk-core.class.site-mall.site')
                     ) {
-                        $result = DB::table(config('wk-core.table.site.sites'))
+                        $result = DB::table(config('wk-core.table.site-mall.sites'))
                                     ->where('is_enabled', 1)
                                     ->where('id', $data['host_id'])
                                     ->exists();

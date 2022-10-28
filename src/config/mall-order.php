@@ -29,7 +29,7 @@ return [
         'mall-shelf'    => 0,
         'morph-comment' => 0,
         'point'         => 0,
-        'site'          => 0
+        'site-mall'     => 0,
     ],
 
     /*
