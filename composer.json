@@ -17,6 +17,9 @@
         "walkerchiu/php-morph-comment": "^1.0",
         "walkerchiu/php-morph-image": "^1.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^5.0"
+    },
     "suggest": {
         "walkerchiu/php-mall-cart": "^1.0",
         "walkerchiu/php-mall-shelf": "^1.0",
